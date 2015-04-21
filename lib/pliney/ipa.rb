@@ -72,5 +72,15 @@ module Pliney
         def get_entry(path)
             return @zipfile.find_entry(path.to_s)
         end
+
+        def provisioning_profile
+            begin
+                profile_data = read_path(appdir.join("embedded.mobileprovision"))
+            rescue Errno::ENOENT
+                return nil
+            end
+
+            ProvisioningProfile.from_asn1(profile_data)
+        end
     end
 end

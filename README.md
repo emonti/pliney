@@ -1,4 +1,5 @@
 # Pliney
+[![Build Status](https://secure.travis-ci.org/emonti/pliney.svg)](https://travis-ci.org/emonti/pliney)
 
 Pliney is for working with Apple IPAs.
 

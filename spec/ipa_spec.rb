@@ -28,6 +28,8 @@ describe Pliney::IPA do
 
     it "reads the info_plist" do
         @ipa.info_plist.should be_a Hash
+        @ipa.info_plist["CFBundleExecutable"].should == "pliney-test"
+        @ipa.info_plist["CFBundleShortVersionString"].should == "1.0"
     end
 
     it "lists the ipa contents" do
@@ -50,7 +52,13 @@ describe Pliney::IPA do
     end
 
     it "reads the provisioning profile" do
-        @ipa.provisioning_profile should be_a Hash
+        @ipa.provisioning_profile.should be_a Pliney::ProvisioningProfile
+        @ipa.provisioning_profile.name.should == "Pliney Test Profile"
     end
+
+    it "reads the executable object"
+
+    it "reads the entitlements"
+
 end
 
