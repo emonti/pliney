@@ -6,6 +6,9 @@ require 'tempfile'
 require 'rubygems'
 require 'rspec'
 require 'pry'
+require 'coveralls'
+
+Coveralls.wear!
 
 $LOAD_PATH << $SPECROOT.join("..", "lib").expand_path
 require 'pliney'
