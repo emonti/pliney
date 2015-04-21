@@ -24,9 +24,43 @@ Or install it yourself as:
 
     $ gem install pliney
 
+
 ## Usage
 
-TODO: Write usage instructions here
+    ipa = Pliney::IPA.from_path 'spec/samples/pliney-test.ipa'
+    # => #<Pliney::IPA:0x...
+
+    ipa.bundle_identifier
+    # => "computer.versus.pliney-test"
+
+    ipa.appdir
+    # => #<Pathname:Payload/pliney-test.app/>
+
+    ipa.executable_path
+    # => #<Pathname:Payload/pliney-test.app/pliney-test>
+
+    ipa.info_plist
+    # => { "DTSDKName"=>"iphoneos8.2", "CFBundleName"=>"pliney-test", "DTXcode"=>"0620", ...
+
+    ipa.read_path(ipa.executable_path)
+    # => "\xCA\xFE\xBA\xBE\x00\x00\x00\...
+
+    profile = ipa.provisioning_profile
+    # => #<Pliney::ProvisioningProfile:0x0...
+
+    profile.developer_certificates
+    # => [#<OpenSSL::X509::Certificate:...
+    
+    profile.expiration_date
+    # => 2016-04-20 14:18:13 -0700
+
+    profile.expired?
+    # => false
+
+    profile.entitlements
+    # => #<Pliney::EntitlementsMask:0x0000010330cc18 @ents={"keychain-access-groups"=>[...
+
+    ipa.close
 
 
 ## TODOS
