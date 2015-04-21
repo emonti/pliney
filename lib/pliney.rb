@@ -1,5 +1,6 @@
 require "pliney/version"
+require 'pliney/ipa'
+require 'pliney/provisioning_profile'
 
 module Pliney
-  # Your code goes here...
 end
