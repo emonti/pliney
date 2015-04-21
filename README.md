@@ -1,5 +1,8 @@
 # Pliney
+[![Gem Version](https://badge.fury.io/rb/rubyzip.svg)](http://badge.fury.io/rb/pliney)
 [![Build Status](https://secure.travis-ci.org/emonti/pliney.svg)](https://travis-ci.org/emonti/pliney)
+[![Code Climate](https://codeclimate.com/github/emonti/pliney.svg)](https://codeclimate.com/github/emonti/pliney)
+[![Coverage Status](https://img.shields.io/coveralls/emonti/rpliney.svg)](https://coveralls.io/r/emonti/pliney?branch=master)
 
 Pliney is for working with Apple IPAs.
 
