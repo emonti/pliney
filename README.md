@@ -2,7 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/pliney.svg)](https://badge.fury.io/rb/pliney)
 [![Build Status](https://secure.travis-ci.org/emonti/pliney.svg)](https://travis-ci.org/emonti/pliney)
 [![Code Climate](https://codeclimate.com/github/emonti/pliney.svg)](https://codeclimate.com/github/emonti/pliney)
-[![Coverage Status](https://img.shields.io/coveralls/emonti/pliney.svg)](https://coveralls.io/r/emonti/pliney?branch=master)
+[![Coverage Status](https://coveralls.io/repos/emonti/pliney/badge.svg?branch=master)](https://coveralls.io/r/emonti/pliney?branch=master)
 
 Pliney is for working with Apple IPAs.
 
