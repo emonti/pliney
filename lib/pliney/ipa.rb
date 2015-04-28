@@ -53,6 +53,14 @@ module Pliney
             return info_plist["CFBundleIdentifier"]
         end
 
+        def bundle_version
+            return info_plist["CFBundleVersion"]
+        end
+
+        def bundle_short_version
+            return info_plist["CFBundleShortVersionString"]
+        end
+
         def executable_path
             return appdir.join(info_plist["CFBundleExecutable"])
         end

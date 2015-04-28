@@ -56,6 +56,14 @@ describe Pliney::IPA do
         @ipa.provisioning_profile.name.should == "Pliney Test Profile"
     end
 
+    it "gets the bundle version" do
+        @ipa.bundle_version.should == "1"
+    end
+
+    it "gets the bundle short version string" do
+        @ipa.bundle_short_version.should == "1.0"
+    end
+
     it "reads the executable object"
 
     it "reads the entitlements"
