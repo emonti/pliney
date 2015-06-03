@@ -61,7 +61,7 @@ module Pliney
         end
 
         def team_identifier
-            plist["TeamIDentifier"]
+            plist["TeamIdentifier"]
         end
 
         def team_name

@@ -54,6 +54,7 @@ describe Pliney::IPA do
     it "reads the provisioning profile" do
         @ipa.provisioning_profile.should be_a Pliney::ProvisioningProfile
         @ipa.provisioning_profile.name.should == "Pliney Test Profile"
+        @ipa.provisioning_profile.team_identifier.should == ["UL736KYQR9"]
     end
 
     it "gets the bundle version" do
