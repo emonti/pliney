@@ -1,6 +1,7 @@
 require 'pliney/util'
 require 'pliney/entitlements'
 require 'openssl'
+require 'digest/sha1'
 
 module Pliney
     class EntitlementsMask < Entitlements
@@ -46,6 +47,10 @@ module Pliney
 
         def developer_certificates
             @developer_certs ||= plist["DeveloperCertificates"].map{|cer| OpenSSL::X509::Certificate.new(cer)}
+        end
+
+        def developer_cert_sha1_digests
+            @dev_cert_digests ||= plist["DeveloperCertificates"].map{|cer| Digest::SHA1.hexdigest(cer)}
         end
 
         def appid_name

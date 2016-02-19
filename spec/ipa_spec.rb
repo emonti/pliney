@@ -55,6 +55,16 @@ describe Pliney::IPA do
         @ipa.provisioning_profile.should be_a Pliney::ProvisioningProfile
         @ipa.provisioning_profile.name.should == "Pliney Test Profile"
         @ipa.provisioning_profile.team_identifier.should == ["UL736KYQR9"]
+        certs = @ipa.provisioning_profile.developer_certificates
+        certs.count.should == 2
+        certs.first.should be_a OpenSSL::X509::Certificate
+
+        cert_digests = @ipa.provisioning_profile.developer_cert_sha1_digests
+        cert_digests.count.should == 2
+        cert_digests.should == [
+            "2b2c476e0bc509bf5e5485d1de95866e409d3116",
+            "84e379b6999efcff905a59d9d1d6017258ec74a1"
+        ]
     end
 
     it "gets the bundle version" do
