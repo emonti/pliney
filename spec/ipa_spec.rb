@@ -75,9 +75,23 @@ describe Pliney::IPA do
         @ipa.bundle_short_version.should == "1.0"
     end
 
+    it "reads the codesignature for the main exe" do
+        cs = @ipa.executable_codesignature
+        cs.should be_a Pliney::AppleCodeSignature::EmbeddedSignature
+    end
+
+    it "reads the raw entitlements data" do
+        ents_data = @ipa.executable_entitlements_data
+        ents_data.should be_a String
+        ents_data.should =~ /^<\?xml/
+    end
+
+    it "reads the parsed entitlements" do
+        ents = @ipa.executable_entitlements
+        ents.should be_a Hash
+        ents["application-identifier"].should == "UL736KYQR9.computer.versus.pliney-test"
+    end
+
     it "reads the executable object"
-
-    it "reads the entitlements"
-
 end
 

@@ -50,7 +50,7 @@ Or install it yourself as:
 
     profile.developer_certificates
     # => [#<OpenSSL::X509::Certificate:...
-    
+
     profile.expiration_date
     # => 2016-04-20 14:18:13 -0700
 
@@ -62,9 +62,3 @@ Or install it yourself as:
 
     ipa.close
 
-
-## TODOS
-
-- macho parsing
-- entitlements extraction/parsing/serialization
-- ?

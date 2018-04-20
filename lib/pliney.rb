@@ -1,6 +1,6 @@
-require "pliney/version"
-require 'pliney/ipa'
-require 'pliney/provisioning_profile'
+require_relative 'pliney/version'
+require_relative 'pliney/ipa'
+require_relative 'pliney/provisioning_profile'
 
 module Pliney
 end

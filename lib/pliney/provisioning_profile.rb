@@ -1,10 +1,19 @@
-require 'pliney/util'
-require 'pliney/entitlements'
 require 'openssl'
 require 'digest/sha1'
 
+require_relative 'util'
+
 module Pliney
-    class EntitlementsMask < Entitlements
+    class EntitlementsMask
+        def self.from_data(data)
+            new(Pliney.parse_plist(data))
+        end
+
+        attr_reader :ents
+        def initialize(ents)
+            @ents = ents
+        end
+
     end
 
     class ProvisioningProfile
