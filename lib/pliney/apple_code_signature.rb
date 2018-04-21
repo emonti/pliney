@@ -169,6 +169,7 @@ module Pliney
         # This is actlually a small compiled expression.
         # csreq(1) can be used to decompile them
         class Requirement < Blob
+            SYSTEM_HAS_CSREQ = system("which csreq")
             attr_reader :data, :decompiled
             def parse
                 super() do
@@ -178,6 +179,7 @@ module Pliney
             end
 
             def self.decompile(data)
+                return nil unless SYSTEM_HAS_CSREQ
                 csreq=IO.popen("csreq -r- -t", "r+")
                 csreq.write(data)
                 decompiled = csreq.read()
