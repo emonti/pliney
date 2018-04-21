@@ -9,7 +9,7 @@ module Pliney
         class ZipExtractError < StandardError
         end
 
-        SYSTEM_HAS_UNZIP = system("which unzip")
+        SYSTEM_HAS_UNZIP = system("which unzip > /dev/null")
 
         def self.from_path(path)
             ipa = new(Zip::File.open(path))
