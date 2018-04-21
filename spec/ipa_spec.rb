@@ -92,6 +92,45 @@ describe Pliney::IPA do
         ents["application-identifier"].should == "UL736KYQR9.computer.versus.pliney-test"
     end
 
-    it "reads the executable object"
+    it "gets the team_identifier" do
+        @ipa.team_identifier == "UL736KYQR9"
+    end
+
+    it "extracts ipa contents" do
+        Dir.mktmpdir do |tmpd|
+            @ipa.extract(tmpd)
+            tmp_path = Pathname(tmpd)
+            @ipa.each_file_entry do |ent|
+                tmp_path.join(ent.name).exist?.should == true
+            end
+        end
+    end
+
+    it "extracts ipa contents to a temp directory yielded to a block" do
+        block_was_called = false
+        @ipa.with_extracted_tmpdir do |tmp_path|
+            block_was_called = true
+            @ipa.each_file_entry do |ent|
+                tmp_path.join(ent.name).exist?.should == true
+            end
+        end
+        block_was_called.should == true
+    end
+
+    it "reads the executable object" do
+        block_was_called = false
+        @ipa.with_executable_macho do |exe_obj|
+            block_was_called = true
+            exe_obj.should be_a Pliney::MachO::FatHeaderReader
+            exe_obj.fat_arches.count.should == 2
+            machos = exe_obj.machos
+            machos.map{|x| x.magic}.should == [
+                Pliney::MachO::MACHO_MAGIC32,
+                Pliney::MachO::MACHO_MAGIC64,
+            ]
+        end
+        block_was_called.should == true
+    end
+
 end
 

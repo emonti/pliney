@@ -6,6 +6,11 @@ require_relative 'apple_code_signature'
 
 module Pliney
     class IPA
+        class ZipExtractError < StandardError
+        end
+
+        SYSTEM_HAS_UNZIP = system("which unzip")
+
         def self.from_path(path)
             ipa = new(Zip::File.open(path))
             if block_given?
@@ -92,6 +97,16 @@ module Pliney
             ProvisioningProfile.from_asn1(profile_data)
         end
 
+        def with_macho_for_entry(file_entry)
+            with_extracted_tmpfile(file_entry) do |tmpfile|
+                yield ::Pliney::MachO.from_stream(tmpfile)
+            end
+        end
+
+        def with_executable_macho(&block)
+            with_macho_for_entry(self.executable_entry, &block)
+        end
+
         def codesignature_for_entry(file_entry)
             _with_tmpdir do |tmp_path|
                 tmpf = tmp_path.join("executable")
@@ -137,17 +152,36 @@ module Pliney
         end
 
         def extract(path)
-            zipfile.each do |ent|
-                extract_path = path.join(ent.name)
-                FileUtils.mkdir_p(extract_path.dirname)
-                ent.extract(extract_path.to_s)
-                extract_path.chmod(ent.unix_perms & 0777)
+            if SYSTEM_HAS_UNZIP
+                ret = system("unzip", "-qd", path.to_s, self.zipfile.name.to_s)
+                unless ret
+                    raise(ZipExtractError, "'unzip' command returned non-zero status: #{$?.inspect}")
+                end
+            else
+                path = Pathname(path)
+                zipfile.each do |ent|
+                    extract_path = path.join(ent.name)
+                    FileUtils.mkdir_p(extract_path.dirname)
+                    ent.extract(extract_path.to_s)
+                    extract_path.chmod(ent.unix_perms & 0777)
+                end
             end
             return path
         end
 
         def with_extracted_tmpdir(&block)
             _with_tmpdir {|tmp_path| yield(extract(tmp_path)) }
+        end
+
+        def with_extracted_tmpfile(ent, &block)
+            tmpf = Tempfile.new("ent")
+            begin
+                Zip::IOExtras.copy_stream(tmpf, ent.get_input_stream)
+                tmpf.rewind
+                yield(tmpf)
+            ensure
+                tmpf.unlink()
+            end
         end
 
         def each_file_entry

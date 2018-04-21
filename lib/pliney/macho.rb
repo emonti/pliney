@@ -71,12 +71,7 @@ module Pliney
             fh.pos -= 4
             return reader_for_filemagic(magic).parse(fh)
         end
-
-        def self.read_file(path)
-            File.open(path, 'rb') do |fh|
-                return read_stream(fh)
-            end
-        end
+        singleton_class.send(:alias_method, :from_stream, :read_stream)
 
         module LoadCommandConst
             LC_SEGMENT = 0x1

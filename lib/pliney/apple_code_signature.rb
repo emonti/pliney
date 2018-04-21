@@ -227,7 +227,7 @@ module Pliney
         end
 
         def self.from_stream(f)
-            obj = MachO::read_stream(f)
+            obj = MachO::from_stream(f)
             mh = if MachO::is_fat_magic(obj.magic)
                      obj.machos.first
                  elsif MachO::is_macho_magic(obj.magic)
@@ -240,7 +240,7 @@ module Pliney
         end
 
         def self.from_path(fname)
-            File.open(fname, 'rb') {|f| return from_stream(f) }
+            return from_stream(File.open(fname, 'rb'))
         end
     end
 end
